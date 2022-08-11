@@ -2,6 +2,8 @@ import colorsys as cs
 
 
 def color_correct(input_color, hue=0.0, sat=1.0, val=0.0):
+    """Function for color correcting rgb tuple. Return formatted string for using with css-like stylesheets"""
+
     r, g, b = (float(i) / 255 for i in input_color)
     h, s, v = cs.rgb_to_hsv(r, g, b)
     color = cs.hsv_to_rgb(h + hue, sat, v * val)
@@ -15,6 +17,7 @@ print(color_correct((10, 10, 10), hue=0.4, sat=1, val=0.4))
 class OGenericStyleSheet:
     def __init__(self, corner_radius=15, font='gill', font_style='',
                  font_size=15, padding=(3, 3), margin=(3, 3)):
+        """Initialize main stylesheet class"""
         self.corner_radius = corner_radius
         self.padding = padding
         self.margin = margin
@@ -35,35 +38,37 @@ class OGenericStyleSheet:
         self.font_style = font_style
 
     def padding_and_margin(self):
+        """Contains padding and margin lines"""
         out = (f"padding: {self.padding[0]}px {self.padding[1]}px;"
                f"margin: {self.margin[0]}px {self.margin[1]}px;")
         return out
 
     def flat_and_hover(self):
-        out = f"""*{{font: {self.font_size}pt {self.font};
-color: {self.font_color_main};
-border-radius: {self.corner_radius}px;
-{self.padding_and_margin()}
-background: {self.button_color};}}
-*:hover{{background: {self.button_color_hover};}}
-*:pressed{{background: {self.button_color_click};}}
-"""
+        """Returns stylesheet for buttons with hover and clicked functionality"""
+        out = f"*{{font: {self.font_size}pt {self.font};"\
+              f"color: {self.font_color_main};"\
+              f"border-radius: {self.corner_radius}px;"\
+              f"{self.padding_and_margin()}"\
+              f"background: {self.button_color};}}"\
+              f"*:hover{{background: {self.button_color_hover};}}"\
+              f"*:pressed{{background: {self.button_color_click};}}"
+
         return out
 
     def simple_with_bg(self):
-        out = f"""
-font: {self.font_size}pt {self.font};
-color: {self.font_color_main};
-background: {self.button_color};
-border-radius: {self.corner_radius}px;
-{self.padding_and_margin()}
-"""
+        """Simple stylesheet with bg"""
+        out = f"font: {self.font_size}pt {self.font};"\
+              f"color: {self.font_color_main};"\
+              f"background: {self.button_color};"\
+              f"border-radius: {self.corner_radius}px;"\
+              f"{self.padding_and_margin()}"
+
         return out
 
     def simple_no_bg(self):
-        out = f"""
-font: {self.font_size}pt {self.font};
-color: {self.font_color_main};
-{self.padding_and_margin()}
-"""
+        """Simple stylesheet without bg"""
+        out = f"font: {self.font_size}pt {self.font};"\
+              f"color: {self.font_color_main};"\
+              f"{self.padding_and_margin()}"
+
         return out
