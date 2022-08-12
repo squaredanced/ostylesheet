@@ -10,12 +10,30 @@ stylesheet = OGenericStyleSheet(font_size=20,
                                 padding=(15, 15))
 
 
+class OComboBox(QComboBox):
+    def __init__(self):
+        super().__init__()
+        self.items = ['Test', 'Test01']
+        self.addItems(self.items)
+        self.setStyleSheet("QComboBox {border: 5px solid gray;"
+                           "border-radius: 10px;"
+                           "padding: 10px 10px;}"
+                           "QComboBox::drop-down {border-radius: 15px;"
+                           "border: 5px solid gray;"
+                           
+                           "padding: 15px 15px;}"
+                           )
+
+
 class OCheckBoxes(QGridLayout):
     def __init__(self):
         super().__init__()
         for c in range(10):
             for r in range(5):
                 chk = QCheckBox()
+                chk.setStyleSheet("QCheckBox {spacing: 15px;}"
+                                  "QCheckBox::indicator {width: 35px; height: 35px;}"
+                                  )
                 self.addWidget(chk, c - 1, r - 1)
 
 
@@ -61,11 +79,14 @@ class Window(QWidget):
 
         chk = OCheckBoxes()
         txt = OTextField()
+        combobox = OComboBox()
+
         self.setLayout(self.layout)
         self.layout.addWidget(button01, 2, 1)
         self.layout.addWidget(button02, 1, 1)
         self.layout.addLayout(chk, 3, 1)
         self.layout.addLayout(txt, 1, 2, 4, 1)
+        self.layout.addWidget(combobox,4,1,1,2)
         self.show()
 
     def file_dialog(self):
